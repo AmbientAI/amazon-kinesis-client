@@ -158,7 +158,7 @@ public class DynamoDBLeaseCoordinator implements LeaseCoordinator {
         this.leaseRenewer = new DynamoDBLeaseRenewer(
                 leaseRefresher, workerIdentifier, leaseDurationMillis, leaseRenewalThreadpool, metricsFactory);
         this.renewerIntervalMillis = getRenewerTakerIntervalMillis(leaseDurationMillis, epsilonMillis);
-        this.takerIntervalMillis = (leaseDurationMillis + epsilonMillis) * 2;
+        this.takerIntervalMillis = getRenewerTakerIntervalMillis(leaseDurationMillis, epsilonMillis) + 2 * epsilonMillis;
         if (initialLeaseTableReadCapacity <= 0) {
             throw new IllegalArgumentException("readCapacity should be >= 1");
         }
